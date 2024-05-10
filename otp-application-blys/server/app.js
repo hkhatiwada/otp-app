@@ -10,25 +10,10 @@ app.listen(PORT, () => console.log("Server started"));
 
 app.use(express.static("dist"));
 
-const items = [
-  {
-    name: "Laptop",
-    price: 500,
-  },
-  {
-    name: "Desktop",
-    price: 700,
-  },
-];
-
 // Generate a random 6-digit OTP
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
 }
-
-app.get("/api/items", (req, res) => {
-  res.send(items);
-});
 
 app.get("/api/healthcheck", (req, res) => {
   res.send("api healh check success");
@@ -38,7 +23,9 @@ app.post("/api/verify-otp", (req, res) => {
   const otp = req.body.otp;
 
   if (otp.length !== 6 || otp.charAt(5) === "7") {
-    res.status(400).json({ error: "Invalid OTP" });
+    res
+      .status(400)
+      .json({ error: "Otp should be 6 digits and shouldn't end with 7" });
   } else {
     res
       .status(200)
