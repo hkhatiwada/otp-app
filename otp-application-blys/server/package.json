@@ -1,9 +1,17 @@
 {
     "dependencies": {
-        "express": "^4.19.2"
+        "@netlify/functions": "^2.6.3",
+        "@types/express": "^4.17.21",
+        "express": "^4.19.2",
+        "netlify-cli": "^17.23.2",
+        "serverless-http": "^3.2.0",
+        "typescript": "^5.4.5"
     },
     "scripts": {
         "start": "node app",
         "dev": "nodemon app"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.11"
     }
 }

@@ -1,8 +1,13 @@
-const express = require("express");
-const bodyParser = require("body-parser");
+import express from "express";
+
+// const express = require("express");
+// const bodyParser = require("body-parser");
+import serverless from "serverless-http";
 
 const app = express();
-app.use(bodyParser.json());
+const router = express.Router();
+
+app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
@@ -15,11 +20,11 @@ function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 
-app.get("/api/healthcheck", (req, res) => {
-  res.send("api healh check success");
+router.get("/healthcheck", (req, res) => {
+  res.send("api health check success");
 });
 
-app.post("/api/verify-otp", (req, res) => {
+router.post("/verify-otp", (req, res) => {
   const otp = req.body.otp;
 
   if (otp.length !== 6 || otp.charAt(5) === "7") {
@@ -32,3 +37,6 @@ app.post("/api/verify-otp", (req, res) => {
       .json({ success: true, message: "OTP verified successfully" });
   }
 });
+
+app.use("/api", router);
+export const handler = serverless(app);
